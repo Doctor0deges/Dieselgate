@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dieselgate - Autodílna v Los Santos</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Centrování přihlašovacího formuláře */
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Výška celé obrazovky */
+            background-color: #f8f9fa; /* Světlé pozadí */
+        }
+        .login-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px; /* Maximální šířka formuláře */
+        }
+    </style>
+</head>
+<body>
+    <!-- Centrování přihlašovacího formuláře -->
+    <div class="center-container">
+        <div class="login-box">
+            <h2 class="text-center mb-4">Přihlášení</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Uživatelské jméno</label>
+                    <input type="text" class="form-control" id="username" placeholder="Uživatelské jméno" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Heslo</label>
+                    <input type="password" class="form-control" id="password" placeholder="Heslo" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Přihlásit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Formulář pro faktury (skrytý, dokud se uživatel nepřihlásí) -->
+    <div id="invoiceForm" class="container mt-5" style="display: none;" action="kokot.php" method="post" >
+        <h2>Zadání faktury</h2>
+        <form id="invoiceFormContent">
+            <div class="form-group">
+                <label for="serviceType">Typ služby</label>
+                <select class="form-control" id="serviceType">
+                    <option value="Oprava">Oprava</option>
+                    <option value="Tuning">Tuning</option>
+                    <option value="Lakování">Lakování</option>
+                    <option value="Jiné">Jiné</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="price">Cena ($)</label>
+                <input type="number" class="form-control" id="price" placeholder="Cena v dolarech" required>
+            </div>
+            <div class="form-group">
+                <label for="notes">Poznámky</label>
+                <textarea class="form-control" id="notes" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Odeslat fakturu</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Přihlašovací údaje
+        const correctUsername = "Santy";
+        const correctPassword = "Kokot";
+
+        // Přihlašovací formulář
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Zabraňuje odeslání formuláře
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Ověření přihlašovacích údajů
+            if (username === correctUsername && password === correctPassword) {
+                alert("Přihlášení úspěšné!");
+                document.querySelector('.center-container').style.display = 'none'; // Skryje přihlašovací formulář
+                document.getElementById('invoiceForm').style.display = 'block'; // Zobrazí formulář pro faktury
+            } else {
+                alert("Neplatné uživatelské jméno nebo heslo!");
+            }
+        });
+
+        // Formulář pro faktury
+        document.getElementById('invoiceFormContent').addEventListener('submit', function(event) {
+            event.preventDefault(); // Zabraňuje odeslání formuláře
+
+            const serviceType = document.getElementById('serviceType').value;
+            const price = document.getElementById('price').value;
+            const notes = document.getElementById('notes').value;
+
+            // Zde byste mohli přidat logiku pro odeslání faktury (např. uložení do databáze)
+            alert(`Faktura odeslána:\nTyp služby: ${serviceType}\nCena: $${price}\nPoznámky: ${notes}`);
+        });
+    </script>
+</body>
+</html>
